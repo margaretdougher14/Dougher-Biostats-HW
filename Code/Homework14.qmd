@@ -1,0 +1,15 @@
+---
+title: "Homework14"
+author: "Margaret Dougher"
+format: html
+editor: visual
+---
+
+## Set Up
+
+```{r}
+rm(list=ls())
+library(here)
+library(tidyverse)
+```
+

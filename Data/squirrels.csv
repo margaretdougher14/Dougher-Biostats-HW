@@ -1,0 +1,34 @@
+﻿Trap_Zone,Species,Total_Weight_g,Bag_Weight_g,Squirrel_Weight_g,Sex,Age,Ear_Tag_#,Fur_Dye,Freeze_Brand
+E,SCCA,860,,,M,Adult,R001,right hip,right hip
+F,SCCA,,,,M,Adult,Escaped,right hip,right backleg
+B,SCCA,800,,,M,Adult,R002,center rump,left leg
+B,SCCA,700,,,M,Adult,R003,left leg,middle left
+B,SCCA,780,,,M,Adult,R004,middle left,middle right
+C,SCCA,950,,,F,Adult,L005,middle back,left hip
+C,SCCA,750,,,F,Adult,L007,left hip,center rump
+C,SCCA,730,,,M,Adult,R008,left hip,left hip
+C,SCCA,710,,,M,Subadult,Escaped,middle right,right shoulder
+C,SCCA,780,,,F,,,,right hip
+C,SCCA,790,,,F,Subadult,L009,right hip,right leg
+C,SCCA,800,,,F,Adult,L010,left middle ,right hip
+C,SCCA,790,,,M,Adult,R011,right hip,right leg
+C,SCCA,870,,,F,Adult,Escaped,right leg,center shoulder
+C,SCCA,,,,F,Adult,L009,right leg,rght hip
+C,SCCA,710,,,M,Adult,R012,left hip,right hip
+C,SCCA,750,,,F,Adult,L013,center shoulder,center rump
+A,SCCA,,,,,,R011,,
+A,SCCA,760,,,F,,L014,left and right leg,left leg
+A,SCCA,850,,,M,,R015,middle center,right leg
+C,SCCA,800,,,M,,Escaped,,
+F,SCCA,750,,,F,,L016,Right hip,right leg
+A,SCCA,870,,,M,,R017,Left leg,left leg
+F,SCCA,890,,,F,,R018,middle left,left hip
+C,SCCA,790,,,M,,R019,right leg,middle center
+C,SCCA,760,,,F,,L16,,
+C,SCCA,760,,,F,,L,left knee,left leg
+E,SCCA,820,,,M,,R20,middle right,left hip
+C,SCCA,740,160,,F,,Escaped,,
+E,SCCA,760,,,F,,Released,,
+,SCCA,850,160,690,M,Juvenile,R051,,left leg
+,SCCA,800,160,640,F,Subadult,,center shoulder,right leg
+,SCCA,920,160,760,F,Adult,L007,left hip,center rump
