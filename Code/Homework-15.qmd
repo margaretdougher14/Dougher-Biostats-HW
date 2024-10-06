@@ -1,0 +1,110 @@
+---
+title: "Homework-15"
+author: "Margaret Dougher"
+format: html
+editor: visual
+---
+
+## Set things up
+
+```{r}
+rm(list=ls())
+library(here)
+library(tidyverse)
+library(dplyr)
+```
+
+## Importing data
+
+```{r}
+compensation <- read.csv(here("Data", "compensation.csv"))
+```
+
+Looking at summary statistics for each of my variables in my data using the summary function
+
+```{r}
+glimpse(compensation)
+summary(compensation)
+```
+
+Learning how to use the 5 'verbs' that are functions of dplyr, select, slice, filter, arrange, and mutate
+
+## Using select function
+
+```{r}
+names(compensation)
+select(compensation, Fruit) #collumns
+select(compensation, -Root) 
+```
+
+## Using slice function
+
+```{r}
+slice(compensation, 2) #rows
+slice(compensation, 2:10)
+slice(compensation, c(2, 3, 10))
+```
+
+## Using filter function
+
+```{r}
+with(compensation, Fruit > 80)
+filter(compensation, Fruit > 80) #gets rows for each condition and assigns to an object
+filter(compensation, Fruit > 80 | Fruit < 20)
+```
+
+Learning how to use the subset of the data
+
+```{r}
+lo_hi_fruit <- filter(compensation, Fruit > 80 | Fruit < 20)
+```
+
+## Using mutate function
+
+```{r}
+head(compensation)
+compensation <- mutate(compensation, logfruit = log(Fruit)) #creating new collumns that are functions of existing variables
+head(compensation)
+```
+
+## Using arrange function
+
+```{r}
+arrange(compensation, Fruit) #sorting observations
+```
+
+Learning how to use more than one dplyr function in one line of code
+
+## Top Tip 1
+
+```{r}
+select(filter(compensation, Fruit > 80), Root)
+```
+
+## Top Tip 2
+
+```{r}
+compensation %>% filter(Fruit > 80) %>% select(Root) #putting the answer of the left command into the function on the right
+#Using pipe command
+```
+
+Learning how to generate a fast summary using two key functions of dplyr
+
+## Method 1: Nested, no pipe
+
+```{r}
+summarise(group_by(compensation, Grazing), meanFruit = mean(Fruit))
+mean.fruit <- summarise(group_by(compensation, Grazing), meanFruit = mean(Fruit))
+```
+
+## Method 2: Pipe, no nesting
+
+```{r}
+compensation %>% group_by(Grazing) %>% summarise(meanFruit = mean(Fruit))
+```
+
+Summarizing and extending summarization methods
+
+```{r}
+compensation %>% group_by(Grazing) %>% summarise(meanFruit = mean(Fruit), sdFruit = sd(Fruit))
+```
