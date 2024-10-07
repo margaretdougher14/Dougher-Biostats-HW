@@ -1,0 +1,19 @@
+---
+title: "hw15"
+format: html
+editor: visual
+---
+
+## Homework 15 feedback
+
+This looks good, Margaret!
+
+I would suggest that some of what you included inside code chunks as comments, e.g.
+
+```{r}
+#here's a comment in a code chunk
+```
+
+You move outside of the code chunks and explain a bit more of your thinking.
+
+But in general, looks great.
