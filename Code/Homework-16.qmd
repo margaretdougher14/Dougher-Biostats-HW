@@ -56,5 +56,6 @@ cover |> filter (Site == "Donnerville 1") |>
 ```{r}
 cover |> filter(cover_type == "Vascular") |>
   summarise (average_percent_vascular = mean(Percent))
+
 ```
 
