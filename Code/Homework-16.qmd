@@ -1,0 +1,60 @@
+---
+title: "Homework-16"
+author: "Margaret Dougher"
+format: html
+editor: visual
+---
+
+## Set things up
+
+```{r}
+rm(list=ls())
+library(here)
+library(tidyverse)
+library(dplyr)
+```
+
+## Importing data
+
+```{r}
+cover <- read.csv(here("Data", "donnerville_percent_cover.csv"))
+```
+
+## Examining the data
+
+```{r}
+glimpse(cover)
+summary(cover)
+```
+
+## Making Site, Plot type, and cover_type into factor variables
+
+```{r}
+cover$Site <- as.factor (cover$Site)
+cover$Plot.type <- as.factor (cover$Plot.type)
+cover$cover_type <- as.factor (cover$cover_type)
+```
+
+## Making Date into a date variable
+
+```{r}
+cover$Date <- as.Date(cover$Date, format = "%d-%b-%y")
+
+glimpse(cover)
+```
+
+## Determine the average percent cover by cover type of bare, bryophytes, and vacular plants in Donnerville 1
+
+```{r}
+cover |> filter (Site == "Donnerville 1") |>
+  group_by (cover_type) |> 
+  summarise (average_percent_cover = mean(Percent))
+```
+
+## Determine the average percent vascular plant cover across all sites
+
+```{r}
+cover |> filter(cover_type == "Vascular") |>
+  summarise (average_percent_vascular = mean(Percent))
+```
+
