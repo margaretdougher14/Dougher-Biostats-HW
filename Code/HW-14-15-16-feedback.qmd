@@ -1,0 +1,18 @@
+---
+title: "Untitled"
+format: html
+editor: visual
+---it b
+---
+
+## Homework 14 feedback
+
+Looks good!
+
+## Homework 15 feedback
+
+Good and nice job separating coding comments inside of code chunks (though you could use more of them!) from thought flow outside of code chunks.
+
+## Homework 16 feedback
+
+You used 'as.Date()' from base R (line 41) to convert Date into a date format, which is fine, but what we went over in class was how to do it with lubridate, which is a bit easier. You might want to go back and look at those notes (from before we started learning git/github. Other than that, looks great!
