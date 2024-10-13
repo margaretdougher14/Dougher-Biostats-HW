@@ -1,0 +1,142 @@
+---
+title: "Homework-18"
+author: "Margaret Dougher"
+format: html
+editor: visual
+---
+
+## Set things up
+
+```{r}
+rm(list=ls())
+library(here)
+library(tidyverse)
+library(dplyr)
+```
+
+## Importing data
+
+```{r}
+compensation <- read.csv(here("Data", "compensation.csv"))
+```
+
+## Graphing data
+
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit)) + 
+  geom_point()
+```
+
+## Scatter plot tutorial
+
+Plotting basics with ggplot
+
+```{r}
+rm(list=ls())
+library(here)
+library(dplyr)
+library(ggplot2)
+```
+
+## Importing data
+
+```{r}
+compensation <- read.csv(here("Data", "compensation.csv"))
+```
+
+Looking at data
+
+```{r}
+glimpse(compensation)
+```
+
+Making my first ggplot picture
+
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit)) +
+  geom_point() #creating the graph 
+
+ggplot(compensation, aes(x = Root, y = Fruit)) +
+  geom_point() +
+  theme_bw() #getting ride of grey background on the graph
+
+ggplot(compensation, aes(x = Root, y = Fruit)) +
+  geom_point(size = 5) +
+  theme_bw() #increasing the size of the points
+```
+
+Altering the x and y axis labels
+
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit)) +
+  geom_point(size = 5) +
+  xlab("Root Biomass") +
+  ylab("Fruit Production") +
+  theme_bw() #changing the x and y axis labels
+```
+
+Adjusting the colors of the points to match specific levels in a group
+
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit, colour = Grazing)) +
+  geom_point(size = 5) +
+  xlab("Root Biomass") +
+  ylab("Fruit Production") +
+  theme_bw()
+
+ggplot(compensation, aes(x = Root, y = Fruit, shape = Grazing)) +
+  geom_point(size = 5) +
+  xlab("Root Biomass") +
+  ylab("Fruit Production") +
+  theme_bw() #changing the shapes of the points on the graph
+```
+
+Creating a box-and-whisker plot
+
+```{r}
+ggplot(compensation, aes(x = Grazing, y = Fruit)) +
+  geom_boxplot() +
+  xlab("Grazing treatment") +
+  ylab("Fruit Production") +
+  theme_bw()
+```
+
+Changing the size, colour, and transparency of the points
+
+```{r}
+ggplot(compensation, aes(x = Grazing, y = Fruit)) +
+  geom_boxplot() +
+  geom_point(size = 4, colour = 'lightgrey', alpha = 0.5) +
+  xlab("Grazing treatment") +
+  ylab("Fruit Production") +
+  theme_bw()
+```
+
+Making a histogram of fruit production
+
+```{r}
+ggplot(compensation, aes(x = Fruit)) +
+  geom_histogram()
+
+# changing the binwidth
+
+ggplot(compensation, aes(x = Fruit)) +
+  geom_histogram(bins = 10)
+ggplot(compensation, aes(x = Fruit)) +
+  geom_histogram(binwidth = 15)
+```
+
+Learning how to produce a matrix of graphs automatically structered by a factor/categorical variable in your data
+
+```{r}
+ggplot(compensation, aes(x = Fruit)) +
+  geom_histogram(binwidth = 15) +
+  facet_wrap(~Grazing)
+```
+Saving graphs
+
+```{r}
+ggsave("ThatCoolHistogramOfFruit.png")
+```
+
+
