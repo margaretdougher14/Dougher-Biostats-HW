@@ -1,0 +1,13 @@
+---
+title: "homework 18 feedback"
+format: html
+editor: visual
+---
+
+## Homework 18 feedback
+
+Line 14 - `library(dplyr`) is not needed because `dplyr` loads with `tidyverse`
+
+This looks good. I'd like to see you do more to add commentary about the what/why of what you are working on, outside of code chunks, and more comments on what the code is actually doing inside of code chunks.
+
+For example, line 129 is good on the what/why of what you are doing, but inside your code chunk, you might want to add a comment that the `facet_wrap` line is the one that makes the matrix of graphs.
