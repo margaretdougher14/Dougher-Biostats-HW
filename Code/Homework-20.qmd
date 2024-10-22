@@ -1,0 +1,83 @@
+---
+title: "Biostats - Homework 20"
+format: html
+editor: visual
+---
+
+### Introduction
+
+The objective of this assignment is to have you continue practicing the skills you have learned in Chapters 3 and 4 of Getting Started with R and reinforce the ideas we discussed in class regarding the Weissgerber et al. paper. Please complete all of the following steps:
+
+1.  Write the code to set up your workspace.
+
+```{r}
+rm(list=ls())
+library(here)
+library(tidyverse)
+```
+
+2.  Read in the dataset called soil_data.csv and name it "soil."
+
+```{r}
+soil <- read.csv(here("Data", "soil_data.csv"))
+```
+
+3.  Create a histogram for the SOM_percent column in the dataframe. Accept the default number of bins.
+
+```{r}
+ggplot(soil, aes(x = SOM_percent)) +
+  geom_histogram()
+```
+
+How would you describe the mean_SOM data based on viewing the histogram? Write your answer below:
+
+I would describe it at around 7%.
+
+4.  Create a new dataframe called SOM by calculating for each forest the mean soil organic matter and the standard deviation of soil organic matter. Make sure to name variables you create "mean_SOM" and "sd_SOM" so that the next code chunk I give you works.
+
+```{r}
+SOM <- data.frame(soil) |>
+  group_by(Forest) |>
+  mutate(mean_SOM = mean(SOM_percent)) |>
+  mutate(sd_SOM = sd(SOM_percent)) |>
+  view()
+```
+
+5.  Now run the following code chunk which will create a bar plot of mean soil organic matter per forest, with standard deviation as error bars.
+
+```{r}
+ggplot(SOM, aes(Forest, mean_SOM))+
+  geom_errorbar(aes(ymax = mean_SOM + sd_SOM, ymin = mean_SOM - sd_SOM), width = 0.2)+
+  geom_col(fill = "white", color = "black")+
+  ylab("Mean percent soil organic matter")+
+  xlab("Forest name")
+```
+
+Based on what you see in the bar chart, how would you describe the pattern of SOM between the 4 different forests? Write your answer here:
+
+At the Kip Tract the SOM is the highest by far. Donnerville, South Hammond, and Degrasse all have close SOM patterns, but Donnerville is higher than the other two, and Degrasse is the lowest.
+
+Now create a boxplot of the SOM_percent data. Use Forest as the x-axis variable and overlay the point data on top of the boxplot. Make the points blue and somewhat transparent. Call the x-axis "Forest name" and the y-axis "Percent soil organic matter" (hint: See homework 18...).
+
+```{r}
+ggplot(SOM, aes(x = Forest, y = SOM_percent)) +
+  geom_boxplot() +
+  geom_point(size = 3, colour = 'blue', alpha = 0.3) +
+  xlab("Forest name") +
+  ylab("Percent soil organic matter") +
+  theme_bw()
+```
+
+Based on what you see in the box plot, write out your answers to the following questions:
+
+-   how would you describe the pattern of SOM between the 4 different forests?
+
+The Kip Tract has a wide range of percent soil organic matter where as Degrasse has a small range along with South Hammond. Donnervill has a relatively small range of percent soil organic matter, but it also has a large outlier.
+
+-   What do you notice that is different from how the data were displayed in the bar plot?
+
+There aren't a ton of dashed lines in the box plot as there was in the bar plot. In the box plot we can actually see where the points are and if there are outliers, the bar plot does not show us that.
+
+-   Which plot type is more informative? Explain your answer.
+
+I think that the box plot is more informative because it allows us to view actual points in the data and it allows us to view if any outliers are present, for example the outlier in the Donnerville section.
