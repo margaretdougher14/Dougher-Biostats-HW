@@ -1,0 +1,98 @@
+---
+title: "Homework-21"
+author: "Margaret Dougher"
+format: html
+editor: visual
+---
+
+## My first Chi-square contingency analysis
+
+## Clear the decks
+```{r}
+rm(list=ls()) #clears R's brain
+```
+## Libraries I always use.
+```{r}
+library(dplyr)
+library(ggplot2)
+library(here)
+```
+## Importing the data
+```{r}
+lady <- read.csv(here("Data", "ladybirds.csv"))
+glimpse(lady) #looking at the data
+```
+## Changing all character variables to factor variables to match the data in Chapter 5
+```{r}
+lady$Habitat <- as.factor(lady$Habitat)
+lady$Site <- as.factor(lady$Site)
+lady$colour <- as.factor(lady$colour)
+```
+## Changing all variables to start with uppercase letters
+```{r}
+colnames(lady)[3] = "Colour"
+colnames(lady)[4] = "Number"
+```
+## Organizing the data for plotting and analysis
+```{r}
+totals <- lady |>
+  group_by(Habitat, Colour) |>
+  summarise(total.Number = sum(Number))
+```
+## Using a bar chart to summarise raw data
+```{r}
+ggplot(totals, aes(x = Habitat, y = total.Number, fill = Colour)) +
+  geom_bar(stat = 'identity', position = 'dodge') +
+  scale_fill_manual(values = c(black = "black", red = "red"))
+```
+## Transforming data into the matrix needed to perform chi-square contingency test
+```{r}
+lady.mat <- xtabs(Number ~ Habitat + Colour, data = lady)
+```
+## Running the chi-square test
+```{r}
+lady.chi <- chisq.test(lady.mat) 
+names(lady.chi)
+```
+
+## My first two sample t-test
+```{r}
+rm(list=ls()) #clearing R's brain
+library(here)
+library(dplyr)
+library(ggplot2)
+```
+## Importing data
+```{r}
+ozone <- read.csv(here("Data", "ozone.csv"))
+glimpse(ozone) #examining data
+```
+## Changing character variables to factor variables to match the data in Chapter 5
+```{r}
+ozone$Garden.location <- as.factor(ozone$Garden.location)
+ozone$Garden.ID <- as.factor(ozone$Garden.ID)
+```
+## Creating a plot of data
+```{r}
+ggplot(ozone, aes(x = Ozone)) +
+  geom_histogram(binwidth = 10) +
+  facet_wrap(~ Garden.location, ncol = 1) + #breaking data into groups
+  theme_bw()
+```
+## Using group_by and summarise functions to determine whether or not we should reject the null hypothesis
+```{r}
+totals <- ozone |>
+  group_by(Garden.location, Garden.ID) |>
+  summarise(total.Ozone = sum(Ozone))
+```
+## Performing a t-test
+```{r}
+t.test(Ozone ~ Garden.location, data = ozone)
+```
+## Comparing var-test function to t-test function
+```{r}
+var.test(Ozone ~ Garden.location, data = ozone)
+```
+
+
+

@@ -42,6 +42,11 @@ SOM <- data.frame(soil) |>
   mutate(sd_SOM = sd(SOM_percent)) |>
   view()
 ```
+Now summarise nitrogen
+```{r}
+Nit <- soil |> group_by(Forest) |>
+  summarise(mean_n = mean(Nitrate_N_ppm, na.rm= T), sd_n = sd(Nitrate_N_ppm, na.rm= T)
+```
 
 5.  Now run the following code chunk which will create a bar plot of mean soil organic matter per forest, with standard deviation as error bars.
 
