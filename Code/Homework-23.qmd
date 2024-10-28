@@ -1,0 +1,56 @@
+---
+title: "Homework-23"
+author: "Margaret Dougher"
+format: html
+editor: visual
+---
+
+## Setting things up
+```{r}
+rm(list=ls()) #clear R's brain
+library(here)
+library(tidyverse) #installing necessary packages
+```
+
+## Importing data
+```{r}
+plants <- read.csv(here("Data", "plant.growth.rate.csv"))
+glimpse(plants) #viewing data
+```
+
+## Plotting and examining the data
+```{r}
+ggplot(plants, aes(x = soil.moisture.content, y = plant.growth.rate)) +
+  geom_point() +
+  ylab("Plant Growth Rate (mm/week)") +
+  theme_bw() #creating a scatterplot
+```
+## Making a linear regression
+```{r}
+model_pgr <- lm(plant.growth.rate ~ soil.moisture.content, data = plants)
+```
+
+## Making assumptions
+```{r}
+library(ggfortify)
+autoplot(model_pgr, smooth.colour = NA)
+```
+We can see from the following plots that there is no pattern in either of the left-hand plots. The normal distribution assumption is met, and there are no points exerting high influence.
+
+## Interpreting the data with the use of anova tables and summary tables
+These tests will help us determine whether or not to reject the null hypothesis, and if our previous assumptions about the data are correct.
+
+```{r}
+anova(model_pgr)
+summary(model_pgr)
+```
+
+## Using ggplot2 to add regression lines
+```{r}
+ggplot(plants, aes(x = soil.moisture.content, y = plant.growth.rate)) +
+  geom_point() +
+  geom_smooth(method = 'lm') +
+  ylab("Plant Growth Rate (mm/week)") +
+  theme_bw()
+```
+
