@@ -36,7 +36,7 @@ glimpse(covid)
 
 Now view the data set. What do you notice about it? Are there any obvious count data already created? Explain:
 
-Write your answer here.
+There is no count data already created.
 
 Now you need to write some code to obtain the actual counts and save them in a new object called `covid_counts`. You will use the familiar `group_by` and `summarise`. However, you need to try a new trick to get counts when your dataset has no actual numbers in it. I'm going to suggest that within your `summarise` statement you create a new variable called `count`. And I'm going to ask you to see if you can figure out how to use a function called `length` to obtain count data. You may need to use the help in RStudio or google to figure out how to do this step.
 
@@ -66,9 +66,11 @@ covid_counts.mat <- xtabs(count ~ Survival + Vaccination_status, data = covid_co
 
 ```{r}
 covid_counts.chi <- chisq.test(covid_counts.mat)
-names(covid_counts.chi)
+covid_counts.chi
 ```
 
 ## Interpret the results
 
 Now write a statement or two that interprets the results of your analysis.
+
+We can reject our null hypothesis of there being no difference between the two variables. From our data and our p-value we can see that there is an association between survival and vaccination status.
