@@ -1,0 +1,80 @@
+---
+title: "Homework 24"
+format: html
+editor: visual
+---
+
+## Overview
+
+For your homework you will implement a data analysis using a dataset on crab growth measurements.
+
+Set things up (hint: there is a new package to add with `library()`)
+
+```{r}
+rm(list=ls()) #clears R's brain
+library(here)
+library(tidyverse)
+library(ggfortify) #installing the necessary packages
+```
+
+## The data
+
+Let's pull in some data appropriate biologists: crab measurements. This dataset includes measurements of farmed crabs.
+
+```{r}
+crabs <- read.csv(here("Data", "CrabAgePrediction.csv"))
+glimpse(crabs) #examining the data
+```
+
+One of the variables is categorical - let's fix that in the data.
+
+```{r}
+crabs$Sex <- as.factor(crabs$Sex)
+```
+
+## Question
+
+Is there a relationship between height and weight in female crabs?
+
+1.  Extract the data for just female crabs.
+```{r}
+crabs1 <- filter(crabs, Sex == 'F')
+```
+
+2.  Examine the response and predictor variables and use the flow chart from class to decide the appropriate statistical analysis (choose from: chi-square, 2-sample t-test or linear regression). Explain your answer here:
+
+I believe the appropriate test would be linear regression. These two variables are ratio data, and since we are testing to look for the relationship between the two variables, and there is only one predictor variable, we would use a linear regression test.
+
+3.  Work through the data analysis **following all of the steps provided in chapter 5 of your book**. You may use class notes or homework keys as a guide.
+
+## Plotting and Examining the data
+```{r}
+ggplot(crabs1, aes(x = Weight, y = Height)) +
+  geom_point() +
+  theme_bw() #creating a scatterplot
+```
+
+## Making a linear regression
+```{r}
+model_crabs <- lm(Height ~ Weight, data = crabs1)
+```
+
+## Making assumptions
+```{r}
+autoplot(model_crabs, smooth.colour = NA)
+```
+
+## Interpreting the data with the use of anova tables and summary tables
+```{r}
+anova(model_crabs)
+summary(model_crabs)
+```
+
+## Using ggplot2 to add regression lines
+```{r}
+ggplot(crabs1, aes(x = Weight, y = Height)) +
+  geom_point() +
+  geom_smooth(method = 'lm') +
+  theme_bw()
+```
+
