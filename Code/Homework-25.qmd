@@ -1,0 +1,72 @@
+---
+title: "Homework-25"
+author: "Margaret Dougher"
+format: html
+editor: visual
+---
+
+## Setting things up
+```{r}
+rm(list=ls()) #clears R's brain
+library(here) #installing the necessary packages
+library(tidyverse)
+library(ggfortify)
+```
+
+## Importing data
+```{r}
+daphnia <- read.csv(here("Data", "Daphniagrowth (1).csv"))
+glimpse(daphnia)
+```
+
+## Changing variables
+```{r}
+daphnia$parasite <- as.factor(daphnia$parasite)
+glimpse(daphnia)
+```
+
+## Plotting and examining the data
+```{r}
+ggplot(daphnia, aes(x = parasite, y = growth.rate)) +
+  geom_boxplot() +
+  theme_bw()
+```
+
+## Manipulating the axis
+```{r}
+ggplot(daphnia, aes(x = parasite, y = growth.rate)) +
+  geom_boxplot() +
+  theme_bw() +
+  coord_flip() #switches the x and y axis
+```
+
+## Constructing the ANOVA test
+```{r}
+model_grow <- lm(growth.rate ~ parasite, data = daphnia)
+```
+
+## Checking assumptions
+```{r}
+autoplot(model_grow, smooth.colour = NA)
+```
+
+## Making an inference from a one-way ANOVA
+```{r}
+anova(model_grow)
+```
+
+## Learning about treatment contrasts
+```{r}
+summary(model_grow)
+```
+
+A good tip i learned was the R likes to use the alphabet, so in the ANOVA framework we can assume that the word "Intercept" represents the first level of the treatment levels alphabetically labeled.
+
+Treatment contrasts report differences between the reference level and the other levels.
+
+# Getting the mean growth rates
+```{r}
+sumDat <- daphnia |>
+  group_by(parasite) |>
+  summarise(meanGR = mean(growth.rate))
+```
