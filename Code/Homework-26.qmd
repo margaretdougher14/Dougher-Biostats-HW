@@ -1,0 +1,67 @@
+---
+title: "Homework-26"
+author: "Margaret Dougher"
+format: html
+editor: visual
+---
+
+## Setting things up
+```{r}
+rm(list=ls()) #clear's R's brain
+library(here)
+library(tidyverse) #installing necessary packages
+library(ggfortify)
+library(multcomp)
+```
+
+## Importing data
+```{r}
+pea <- read.csv(here("Data", "s_r_pea_sections.csv"))
+glimpse(pea)
+```
+
+## Changing variables
+```{r}
+pea$Treatment <- as.factor(pea$Treatment)
+```
+
+## Plotting and examining data
+```{r}
+ggplot(pea, aes(x = Treatment, y = pea_section_length_ou)) +
+  geom_boxplot() +
+  theme_bw() +
+  coord_flip() #switches the x & y acxis
+```
+
+## Constructing ANOVA test
+```{r}
+model_pea <- lm(pea_section_length_ou ~ Treatment, data = pea)
+```
+
+## Checking assumptions
+```{r}
+autoplot(model_pea, smooth.colour = NA)
+```
+
+## Making inferences from one-way ANOVA test
+```{r}
+anova(model_pea)
+```
+
+## Using treatment contrasts
+```{r}
+summary(model_pea)
+```
+According to our p-value we can see that there is a significant difference between Treatment levels and pea_section_length_ou since our p-value is very very small. We can also see from our F-value that there is a significant difference between groups due to the fact that the F-value is very large. 
+
+## Conducting a Tukey HSD test
+```{r}
+pch1 <- glht(model_pea, linfct = mcp(Treatment = "Tukey"))
+summary(pch1)
+```
+
+## Using 'compact letter display'
+```{r}
+cld(pch1)
+```
+Looking at our results from the Tukey HSD test we can see that "Control" and "2 percent sucrose" are signficantly different from eachother since they have different letters, and they are both signficantly different from all the other treatment groups since all the other treatment groups have the same different lettter. 
