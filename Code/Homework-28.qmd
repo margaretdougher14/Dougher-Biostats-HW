@@ -1,0 +1,115 @@
+---
+title: "Homework-28"
+author: "Margaret Dougher"
+format: html
+editor: visual
+---
+
+## Settings things up
+```{r}
+rm(list=ls()) #clears R's brain
+library(here)
+library(tidyverse)
+library(ggfortify)
+library(multcomp)
+library(gridExtra)
+```
+
+## Importing the data
+```{r}
+compensation <- read.csv(here("Data", "compensation.csv"))
+```
+
+## Plotting the data
+```{r}
+#Base scatterplot
+eg_scatter <-
+  ggplot(data = compensation, aes(x = Root, y = Fruit)) +
+  geom_point()
+
+#Base box-and-whiskers plot
+eg_box <-
+  ggplot(data = compensation, aes(x = Grazing, y = Fruit)) +
+  geom_boxplot()
+```
+
+## Using the figure
+```{r}
+eg_scatter + theme_bw()
+```
+
+## Plotting more than one ggplot onto the same page using new gridExtra package
+```{r}
+grid.arrange(eg_scatter, eg_box, nrow = 1)
+```
+
+## Messing around with the labeling on graphs
+```{r}
+eg_scatter + xlab("Root Biomass") + ylab("Fruit Production")
+
+eg_scatter + ggtitle("My SUPERB title")
+
+#combining the two codes above into one for better formatting
+
+eg_scatter + labs(title = "My useless title", x = "Root Biomass", y = "Fruit Production")
+
+#changing the range of the x and y axis
+
+eg_scatter + xlim(0,20) + ylim(0,140)
+```
+
+## Putting custom text inside the figure
+```{r}
+eg_scatter +
+  annotate("text", x = c(6,8), y = c(105,25), label = c("Text up here...", "...and text down here"))
+```
+
+Now we are going to adjust the range of the x-axis using the 'limits =' argument, and the frequency and location of the tick marks by specifying the integer values where we want them with 'breaks =' argument.
+
+```{r}
+eg_scatter + scale_x_continuous(limits = c(4,11), breaks = 4:11)
+```
+
+Continuing on with learning new tricks about graphs, we are going to customize the colors allocated to each group using the 'scale_colour_manual()'
+
+```{r}
+ggplot(data = compensation, aes(x = Root, y = Fruit, colour = Grazing)) +
+  geom_point() +
+  scale_colour_manual(values = c(Grazed = "brown", Ungrazed = "green"))
+
+eg_box +
+  scale_y_continuous(breaks = seq(from = 10, to = 150, by = 20), trans = "log10")
+```
+
+## Understanding and practicing using the theme function
+```{r}
+eg_scatter +
+  theme(
+    panel.background = element_rect(fill = NA, colour = "black"),
+    panel.grid.minor = element_blank(),
+    panel.grid.major = element_line(colour = "lightblue")
+  )
+#now we are going to use the theme function to adjust the color and size of the x-axis title, and the angle of the x-axis tick labels.
+
+eg_box +
+  theme(
+    axis.title.x = element_text(colour = "cornflowerblue", size =rel(2)),
+    axis.text.x = element_text(angle = 45, size = 13, vjust = 0.5)
+  )
+```
+
+## Discrete axis customizations
+```{r}
+eg_box + scale_x_discrete(limits = c("Ungrazed", "Grazed"), labels = c("Control", "Grazed"))
+```
+
+## Continuing to learn more about different ways the theme function can alter figures
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit, colour = Grazing)) +
+         geom_point() +
+         theme(legend.key = element_rect(fill = NA))
+
+ggplot(compensation, aes(x = Root, y = Fruit, colour = Grazing)) +
+  geom_point() +
+  theme(legend.position = "none")
+```
